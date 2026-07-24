@@ -34,4 +34,10 @@ class Solution:
 
         # Build the final result array for elements present in nums1
         result = [nge_map[x] for x in nums1]
+<<<<<<< HEAD:Stacks and Queues/Monotonic Stack/next_greater_element__1.py
         return result
+=======
+        return result
+
+    
+>>>>>>> 03b7b6657a5e70cc73f65c38aedc605bf7fd975f:Stacks and Queues/Monotonic Stack/next_greater_element_1.py
