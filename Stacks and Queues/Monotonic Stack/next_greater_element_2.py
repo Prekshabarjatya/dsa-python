@@ -1,25 +1,41 @@
+"""
+This module contains the optimal solution for LeetCode 503: Next Greater Element II.
+"""
+from typing import List
+
+# pylint: disable=too-few-public-methods
 class Solution:
+    """
+    Solution class using a Monotonic Stack with circular array mapping.
+    """
+    # pylint: disable=invalid-name
     def nextGreaterElements(self, nums: List[int]) -> List[int]:
-                n = len(nums)
-                result = [-1] * n
-                stack = []
+        """
+        Find the next greater element for all values in a circular array.
+        Time Complexity: O(N) | Space Complexity: O(N)
+        """
+        n = len(nums)
+        result = [-1] * n
+        stack = []
 
-                # Process nums from right to left to build the next greater element map
-                for i in range (2*n-1,-1,-1):
-                    num = nums[i%n]
-                    # Maintain a decreasing stack structure
-                    while stack and stack[-1] <= num:
-                        stack.pop()
+        # Process virtually across a doubled array length (2N-1 down to 0)
+        for i in range(2 * n - 1, -1, -1):
+            actual_index = i % n
+            num = nums[actual_index]
 
-                    # If stack is not empty, the top element is the next greater element
-                    if i < n :
-                        if stack:
-                            result[i%n] = stack[-1]
-                        else:
-                            result[i%n] = -1
+            # Maintain a decreasing stack structure
+            while stack and stack[-1] <= num:
+                stack.pop()
 
-                    # Push current number onto the stack
-                    stack.append(num)
+            # Assign directly to the slot during the real pass phase
+            if i < n:
+                if stack:
+                    result[actual_index] = stack[-1]
+                else:
+                    result[actual_index] = -1
 
-                # Build the final result array for elements present in nums1
-                return result
+            # Push current number onto the stack
+            stack.append(num)
+
+        return result
+    
